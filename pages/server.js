@@ -1,11 +1,21 @@
-import getConfig from 'next/config'
 import Head from 'next/head'
 import Image from 'next/image'
+import { getAhihi } from '../helpers/ahihi'
 import styles from '../styles/Home.module.css'
 
 
-export default function Home({}) {
-    return (
+export async function getServerSideProps(context) {
+  const ahihi = getAhihi()
+
+  return {
+    props: {
+      ahihi
+    }, // will be passed to the page component as props
+  }
+}
+
+export default function Home({ ahihi }) {
+  return (
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -13,18 +23,12 @@ export default function Home({}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-
-
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <h1 className={styles.title}>
-          {getConfig().publicRuntimeConfig.PUBLIC_AHIHI}
-        </h1>
-      
-        <h1 className={styles.title}>
-          server runtime config: {getConfig().serverRuntimeConfig.SERVER_AHIHI}
+          {ahihi}
         </h1>
         <p className={styles.description}>
           Get started by editing{' '}
